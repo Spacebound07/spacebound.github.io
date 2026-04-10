@@ -375,12 +375,12 @@
     }
 
     let musicStarted = false;
-    document.body.addEventListener('click', function () {
-      if (!musicStarted) {
-        document.getElementById('bgMusic').play();
-		audio.volume = 0.35;
+	document.body.addEventListener('click', function () {
+ 	 if (!musicStarted) {
+    	const audio = document.getElementById('bgMusic');
+    	audio.volume = 0.35;
     	audio.play();
-        musicStarted = true;
+    	musicStarted = true;
       }
     });
   </script>
