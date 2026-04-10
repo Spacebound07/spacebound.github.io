@@ -1,17 +1,387 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Download Video</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Anniversary</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background-color: #FDF0F5;
+      font-family: 'Jost', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.25rem;
+      position: relative;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    #petals {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .petal {
+      position: absolute;
+      pointer-events: none;
+      animation: floatUp 4s ease-in infinite;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+      100% { transform: translateY(-110vh) rotate(20deg); opacity: 0; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.15); }
+    }
+
+    .fade1 { animation: fadeInUp 1s ease both; }
+    .fade2 { animation: fadeInUp 1s ease 0.35s both; }
+    .fade3 { animation: fadeInUp 1s ease 0.65s both; }
+    .fade4 { animation: fadeInUp 1s ease 0.95s both; }
+
+    .heart-beat {
+      display: inline-block;
+      animation: pulse 2.2s ease-in-out infinite;
+      color: #D4537E;
+      font-size: 1.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 580px;
+    }
+
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      margin-bottom: 2.2rem;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 0.7rem;
+    }
+
+    .eyebrow-dot {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #ED93B1;
+    }
+
+    .eyebrow-text {
+      font-size: 10.5px;
+      letter-spacing: 0.2em;
+      color: #993556;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-family: 'Jost', sans-serif;
+    }
+
+    .main-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 6vw, 3rem);
+      font-weight: 400;
+      color: #4B1528;
+      line-height: 1.1;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      border: 1px solid #F4C0D1;
+      padding: 2.75rem 2.5rem;
+      margin-bottom: 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -24px; right: -24px;
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: #FBEAF0;
+      opacity: 0.65;
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      bottom: -28px; left: -22px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: #FDF0F5;
+      opacity: 0.8;
+    }
+
+    .letter {
+      position: relative;
+      z-index: 1;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.08rem);
+      color: #72243E;
+      line-height: 2;
+      text-align: center;
+    }
+
+    .letter p {
+      margin-bottom: 1.2em;
+    }
+
+    .letter p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ── Stats row ── */
+    .stats {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 1.75rem;
+      text-align: center;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 36px;
+      background: #F4C0D1;
+    }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: #D4537E;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: #993556;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: 'Jost', sans-serif;
+    }
+
+    /* ── Button ── */
+    .btn-wrap {
+      text-align: center;
+    }
+
+    .main-btn {
+      background: #D4537E;
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      font-size: 0.9rem;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 400;
+      letter-spacing: 0.07em;
+      font-family: 'Jost', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      transition: background 0.25s ease, transform 0.2s ease;
+    }
+
+    .main-btn:hover {
+      background: #b83d6a;
+      transform: scale(1.03);
+    }
+
+    .tagline {
+      margin-top: 1.1rem;
+      font-size: 11px;
+      color: #993556;
+      opacity: 0.5;
+      letter-spacing: 0.06em;
+      font-family: 'Jost', sans-serif;
+    }
+  </style>
 </head>
-<body style="text-align:center; margin-top:100px; font-family:Arial;">
+<body>
 
-    <h1>Download My Video</h1>
+  <div id="petals"></div>
 
-    <a href="https://drive.google.com/file/d/19YfrOaUGkSMXtCg2K0cepjdOAPvhjKY-/view?usp=sharing" download>
-        <button style="padding:15px 30px; font-size:18px;">
-            Click here!
-        </button>
-    </a>
+  <div class="page-wrapper">
+
+    <div class="header fade1">
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span class="eyebrow-text">Five years together</span>
+        <span class="eyebrow-dot"></span>
+      </div>
+      <h1 class="main-title">Happy Anniversary</h1>
+      <div class="heart-beat">&#9829;</div>
+    </div>
+
+    <div class="card fade2">
+      <div class="letter">
+        <p>Before you, my life was composed in muted tones; functional, steady, untouched by wonder,<br>
+        as though I had learned to exist without ever truly feeling the weight of being alive.</p>
+
+        <p>And then you happened not abruptly, not violently,<br>
+        but like dawn unfurling itself across a reluctant sky,<br>
+        soft at first… and then impossible to ignore.</p>
+
+        <p>You did not simply enter my world, you re-authored it.<br>
+        Every ordinary moment you touched seemed to gather meaning,<br>
+        as if time itself paused, just slightly, to admire what you had made of it.</p>
+
+        <p>There is a beauty in you that defies simplicity;<br>
+        not something that can be captured in passing glances,<br>
+        but something that reveals itself in the quiet intricacies of who you are.</p>
+
+        <p>In the way your eyes seem to hold entire constellations,<br>
+        in the way your presence feels like both fire and refuge,<br>
+        something that warms me without ever asking me to withstand the burn.</p>
+
+        <p>Your mind <br>
+        <em>God, your mind</em> —<br>
+        it moves with a kind of luminous precision,<br>
+        effortlessly weaving logic with curiosity,<br>
+        sharp, discerning, endlessly alive.<br>
+        You don't just understand the world,<br>
+        you challenge it, reshape it,<br>
+        leave it slightly better than you found it <br>
+        and somehow, you've done the same to me.</p>
+
+        <p>And your wit<br>
+	so instinctive, so beautifully timed <br>
+        it disarms me in ways I never saw coming.<br>
+        You have this quiet magic of taking the heaviest days<br>
+        and making them feel… bearable, sometimes even beautiful.</p>
+
+        <p>But it is your strength that undoes me the most.<br>
+        Not loud, not performative<br>
+        but resolute, unyielding, deeply rooted.<br>
+        The kind that endures. The kind that continues,<br>
+        even when no one is watching,<br>
+        even when it would be easier to stop.<br>
+        And still, you remain gentle <br>
+        as if resilience and tenderness have found a way to coexist within you.</p>
+
+        <p>You have turned my life into something vivid <br>
+        a canvas I didn't realize was incomplete<br>
+        until you filled it with color.<br>
+        On days that would have otherwise faded into nothing,<br>
+        you have given meaning, warmth, permanence.</p>
+
+        <p>Loving you has not been a moment<br>
+        it has been a transformation.<br>
+        A slow, beautiful unraveling of everything I thought I knew about love,<br>
+        and a quiet reconstruction into something far more profound.</p>
+
+        <p>And now, when I think of the future,<br>
+        I don't see it as something distant or uncertain <br>
+        I see it as a place where you are.<br>
+        In the mundane mornings, in the unremarkable afternoons,<br>
+        in the quiet nights where nothing extraordinary happens<br>
+        except the simple, miraculous fact that we are still choosing each other.</p>
+
+        <p>I want all of it with you <br>
+        the laughter, the struggles, the becoming.<br>
+        I want a life that is not perfect, but ours <br>
+        built slowly, deliberately, with the same care you have given my heart.</p>
+
+        <p>Because if loving you has taught me anything, it is this <br>
+        that forever is not a promise to be feared,<br>
+        but something to be longed for,<br>
+        if it means I get to spend it<br>
+        learning you, loving you,<br>
+        again and again,<br>
+        in ways I have yet to discover.</p>
+      </div>
+    </div>
+
+    <div class="stats fade3">
+      <div>
+        <div class="stat-number">5</div>
+        <div class="stat-label">Years</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div>
+        <div class="stat-number">&#8734;</div>
+        <div class="stat-label">Moments</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div>
+        <div class="stat-number">1</div>
+        <div class="stat-label">Lifetime</div>
+      </div>
+    </div>
+
+    <div class="btn-wrap fade4">
+      <a href="https://drive.google.com/uc?export=download&id=19YfrOaUGkSMXtCg2K0cepjdOAPvhjKY-" download class="main-btn">
+        <span>&#9829;</span>
+        <span>Treasure trove of memories</span>
+        <span>&#9829;</span>
+      </a>
+      <p class="tagline">I promise you a forever...</p>
+    </div>
+
+  </div>
+
+  <audio id="bgMusic" loop src="music.mp3"></audio>
+
+  <script>
+    const petalContainer = document.getElementById('petals');
+    const symbols = ['✦', '♡', '✧', '∘'];
+    const colors = ['#F4C0D1', '#ED93B1', '#D4537E', '#FBEAF0'];
+
+    for (let i = 0; i < 22; i++) {
+      const p = document.createElement('span');
+      p.className = 'petal';
+      p.textContent = symbols[i % symbols.length];
+      p.style.left = Math.random() * 100 + '%';
+      p.style.bottom = '-30px';
+      p.style.color = colors[i % colors.length];
+      p.style.animationDelay = (Math.random() * 7) + 's';
+      p.style.animationDuration = (4 + Math.random() * 5) + 's';
+      p.style.fontSize = (10 + Math.random() * 12) + 'px';
+      p.style.opacity = (0.4 + Math.random() * 0.6).toString();
+      petalContainer.appendChild(p);
+    }
+
+    let musicStarted = false;
+    document.body.addEventListener('click', function () {
+      if (!musicStarted) {
+        document.getElementById('bgMusic').play();
+        musicStarted = true;
+      }
+    });
+  </script>
 
 </body>
 </html>
